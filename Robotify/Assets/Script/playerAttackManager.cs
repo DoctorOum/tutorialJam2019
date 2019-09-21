@@ -10,16 +10,4 @@ public class playerAttackManager : MonoBehaviour
     public GameObject[] guns;
 
 
-    private void Update()
-    {
-        if (Input.GetButtonDown("Fire1"))
-        {
-            Fire();
-        }
-    }
-
-    private void Fire()
-    {
-
-    }
 }
