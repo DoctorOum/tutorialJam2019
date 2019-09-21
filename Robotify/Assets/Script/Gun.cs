@@ -25,7 +25,16 @@ public class Gun : MonoBehaviour
             GameObject shot = Instantiate(projectile, spawnPoint.transform.position, Quaternion.identity);
             Projectile currentP = shot.GetComponent<Projectile>();
 
-            currentP.damage = damage * damageMult;
+            if (SpreadDamageOverBullets)
+            {
+                currentP.damage = (damage * damageMult)/projectileSpawns.Length;
+            }
+            else
+            {
+                currentP.damage = damage * damageMult;
+            }
+            
+
             currentP.flightSeed = projectileSpeed;
 
             if (AlternateBarrels)
