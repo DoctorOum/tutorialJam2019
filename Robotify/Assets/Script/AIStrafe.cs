@@ -7,6 +7,7 @@ public class AIStrafe : MonoBehaviour
     GameObject Player;
     float sightDistance = 15f;
     float strafeDistance;
+    public LayerMask PlayerLayer;
     
     void Start()
     {
@@ -24,10 +25,11 @@ public class AIStrafe : MonoBehaviour
             angle = Mathf.Atan2(relative.x, relative.y) * Mathf.Rad2Deg;
             transform.Rotate(0, 0, -angle);
             
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, Mathf.Infinity);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, Mathf.Infinity, PlayerLayer);
             
             if (hit.collider.gameObject.tag == "Player")
             {
+                
                 if (Mathf.Sqrt(displacement.x * displacement.x + displacement.y * displacement.y) > strafeDistance)
                 {
                     gameObject.transform.position = Vector2.MoveTowards(gameObject.transform.position, hit.collider.transform.position, .05f);
