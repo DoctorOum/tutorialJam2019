@@ -105,8 +105,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5591200898909098322}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.357, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0.8141156, w: -0.58070296}
+  m_LocalPosition: {x: -13.997501, y: -11.439613, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 9096311096136420021}
@@ -137,6 +137,7 @@ MonoBehaviour:
   projectile: {fileID: 601418964300297797, guid: 3c6cb40fb554de648971df826fb66956,
     type: 3}
   AlternateBarrels: 0
+  isEnemy: 1
   isPickup: 0
 --- !u!1 &8156932050464326729
 GameObject:
