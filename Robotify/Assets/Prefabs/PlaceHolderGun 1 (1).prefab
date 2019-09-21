@@ -127,13 +127,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 5
-  fireRate: 1
+  fireRate: 0.2
   projectileSpeed: 10
   damageMult: 1
   fireRateMult: 1
   SpreadDamageOverBullets: 0
-  projectileSpawns: []
-  projectile: {fileID: 0}
+  projectileSpawns:
+  - {fileID: 3883077725297674099}
+  - {fileID: 3883077726047275197}
+  projectile: {fileID: 601418964300297797, guid: 3c6cb40fb554de648971df826fb66956,
+    type: 3}
   AlternateBarrels: 0
 --- !u!1 &3883077725297674099
 GameObject:

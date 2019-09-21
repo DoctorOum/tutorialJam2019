@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class playerAttackManager : MonoBehaviour
 {
-
+    public int ammo;
+    public int sideCount = 4;
+    public GunPositionManager gpm;
     public GameObject[] guns;
 
     private void Update()
@@ -13,11 +15,15 @@ public class playerAttackManager : MonoBehaviour
         {
             FireGuns();
         }
-    }
+        if (Input.GetButtonDown("Fire2"))
+        {
+            gpm.UpdateGunPositions();
+        }
 
+    }
     private void FireGuns()
     {
-        foreach(GameObject gun in guns)
+        foreach (GameObject gun in guns)
         {
             Gun gunScript = gun.GetComponent<Gun>();
             gunScript.Fire();
