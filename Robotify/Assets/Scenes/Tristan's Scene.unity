@@ -1281,7 +1281,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33410798cf6c88041b759c9985ebd826, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  guns: []
+  ammo: 0
+  sideCount: 4
+  gpm: {fileID: 0}
+  guns:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!50 &941493858
 Rigidbody2D:
   serializedVersion: 4

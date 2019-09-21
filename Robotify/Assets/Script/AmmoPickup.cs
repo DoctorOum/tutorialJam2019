@@ -5,14 +5,22 @@ using UnityEngine;
 public class AmmoPickup : MonoBehaviour
 {
     playerAttackManager pam;
+    GameObject player;
     int ammo;
+
+    void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+        pam = player.GetComponent<playerAttackManager>();        
+        ammo = (int)(pam.sideCount * pam.guns.Length * Random.Range(.7f, 1.3f));
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        pam = gameObject.GetComponent<playerAttackManager>();
-        ammo = (int)(2/* * number of sides*/ * pam.guns.Length * Random.Range(.7f, 1.3f));
-        if(collision.tag == "Ammo")
+        if(collision.tag == "Player")
         {
-            //when playerAttackManager knows about ammo, add picked up ammo to the reserves in playerAttackManager
+            pam.ammo += ammo;
+            Destroy(gameObject);
         }
     }
 }
