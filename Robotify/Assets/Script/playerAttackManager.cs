@@ -5,9 +5,23 @@ using UnityEngine;
 public class playerAttackManager : MonoBehaviour
 {
 
-    public int damage;
-    public float fireRate;
     public GameObject[] guns;
 
+    private void Update()
+    {
+        if (Input.GetButton("Fire1"))
+        {
+            FireGuns();
+        }
+    }
 
+    private void FireGuns()
+    {
+        foreach(GameObject gun in guns)
+        {
+            Gun gunScript = gun.GetComponent<Gun>();
+            gunScript.Fire();
+            //print("Called Fire Function");
+        }
+    }
 }

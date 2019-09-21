@@ -16,13 +16,23 @@ public class Gun : MonoBehaviour
     [SerializeField]private GameObject[] projectileSpawns;
     [SerializeField]private GameObject projectile;
     public bool AlternateBarrels;
+    private bool firing;
 
+    public void Fire()
+    {
+        if (!firing)
+        {
+            firing = true;
+            StartCoroutine("FIRE");
+        }
+        
+    }
 
-    IEnumerator Fire()
+    IEnumerator FIRE()
     {
         foreach (GameObject spawnPoint in projectileSpawns)
         {
-            GameObject shot = Instantiate(projectile, spawnPoint.transform.position, Quaternion.identity);
+            GameObject shot = Instantiate(projectile, spawnPoint.transform.position, transform.rotation);
             Projectile currentP = shot.GetComponent<Projectile>();
 
             if (SpreadDamageOverBullets)
@@ -33,14 +43,16 @@ public class Gun : MonoBehaviour
             {
                 currentP.damage = damage * damageMult;
             }
-            
 
             currentP.flightSeed = projectileSpeed;
 
             if (AlternateBarrels)
-                yield return new WaitForSeconds((1f / (fireRate * fireRateMult))/projectileSpawns.Length);
+                yield return new WaitForSeconds((fireRate / fireRateMult)/projectileSpawns.Length);
         }
-        if(!AlternateBarrels)
-            yield return new WaitForSeconds(1f / (fireRate * fireRateMult));
+        
+        //print("Fired Gun");
+        if (!AlternateBarrels)
+            yield return new WaitForSeconds((fireRate / fireRateMult));
+        firing = false;
     }
 }
