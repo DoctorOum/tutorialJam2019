@@ -7,6 +7,7 @@ public class AIStrafe : MonoBehaviour
     GameObject Player;
     float sightDistance = 15f;
     float strafeDistance;
+    public float speed = 2;
     public LayerMask PlayerLayer;
     
     void Start()
@@ -42,7 +43,7 @@ public class AIStrafe : MonoBehaviour
                     Debug.Log("Theta: " + (Mathf.Rad2Deg * (angle - Mathf.PI / 2)));
                     *///It works... with a few grains of salt D;
 
-                    transform.Translate(Vector3.right * Time.deltaTime * 2);
+                    transform.Translate(Vector3.right * Time.deltaTime * speed);
                 }
                 else
                 {
