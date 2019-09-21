@@ -18,6 +18,9 @@ public class Gun : MonoBehaviour
     public bool AlternateBarrels;
     private bool firing;
 
+    [Header("Dropped State")]
+    public bool isPickup;
+
     public void Fire()
     {
         if (!firing)
