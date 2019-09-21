@@ -21,6 +21,11 @@ public class Gun : MonoBehaviour
     [Header("Dropped State")]
     public bool isPickup;
 
+    public void Dropped()
+    {
+        StartCoroutine("DropDelay");
+    }
+
     public void Fire()
     {
         if (!firing)
@@ -31,6 +36,11 @@ public class Gun : MonoBehaviour
         
     }
 
+    IEnumerator DropDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        isPickup = true;
+    }
     IEnumerator FIRE()
     {
         foreach (GameObject spawnPoint in projectileSpawns)

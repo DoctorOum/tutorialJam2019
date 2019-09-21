@@ -5,9 +5,6 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float speed;
-    //[Header("Camera Follow")]
-    //public Transform camera;
-    //public float smooth;
 
     private void Update()
     {

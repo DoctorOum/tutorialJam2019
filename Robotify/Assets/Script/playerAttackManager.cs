@@ -17,18 +17,21 @@ public class playerAttackManager : MonoBehaviour
         }
         if (Input.GetButtonDown("Fire2"))
         {
-            gpm.SetGunPosition();
+            gpm.SetGunPositions();
         }
 
     }
 
     private void FireGuns()
     {
-        foreach (GameObject gun in guns)
+        for(int i = 0; i < guns.Count; i++)
         {
-            Gun gunScript = gun.GetComponent<Gun>();
-            gunScript.Fire();
-            //print("Called Fire Function");
+            if (guns[i] != null)
+            {
+                Gun gunScript = guns[i].GetComponent<Gun>();
+                gunScript.Fire();
+                //print("Called Fire Function");
+            }
         }
     }
 }

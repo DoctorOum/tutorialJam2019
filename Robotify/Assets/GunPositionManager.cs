@@ -9,15 +9,21 @@ public class GunPositionManager : MonoBehaviour
     [SerializeField] private GameObject front;
     [SerializeField] private GameObject gunContainer;
     private bool canRotateGuns = true;
+    private bool canPickupGuns = true;
 
     private void Start()
     {
         pam = GetComponentInParent<playerAttackManager>();
 
-        SetGunPosition();
+        SetGunPositions();
     }
 
-
+    public void AddSide()
+    {
+        pam.sideCount++;
+        pam.guns.Add(null);
+        SetGunPositions();
+    }
 
     private void Update()
     {
@@ -32,12 +38,37 @@ public class GunPositionManager : MonoBehaviour
         }
     }
 
+    public void PickUpGun(GameObject gunToPickup)
+    {
+        if (canPickupGuns && gunToPickup.GetComponentInParent<Gun>().isPickup)
+        {
+            print("Front Gun Index " + frontGunIndex + " is " + pam.guns[frontGunIndex]);
+            if (pam.guns[frontGunIndex] == null)
+            {
+                pam.guns[frontGunIndex] = gunToPickup.transform.parent.gameObject;
+                print("Front Gun Index " + frontGunIndex + " is now " + pam.guns[frontGunIndex]);
+                gunToPickup.transform.parent.SetParent(gunContainer.transform);
+                gunToPickup.transform.parent.transform.position = front.transform.position;
+                gunToPickup.transform.parent.transform.rotation = front.transform.rotation;
+                gunToPickup.GetComponentInParent<Gun>().isPickup = false;
+            }
+            else
+            {
+                print("Error: Front full");
+            }
+        }
+    }
+
     public void DropGun()
     {
-        GameObject gunToDrop = pam.guns[frontGunIndex];
-        pam.guns.RemoveAt(frontGunIndex);
-        gunToDrop.transform.SetParent(null);
-        gunToDrop.GetComponent<Gun>().isPickup = true;
+        if(pam.guns[frontGunIndex] != null)
+        {
+            GameObject gunToDrop = pam.guns[frontGunIndex];
+            pam.guns[frontGunIndex] = null;
+            gunToDrop.transform.SetParent(null);
+            gunToDrop.GetComponent<Gun>().Dropped();
+            StartCoroutine("PickupDelay");
+        }
     }
 
     public void RotateGuns(float direction)
@@ -55,15 +86,15 @@ public class GunPositionManager : MonoBehaviour
             frontGunIndex--;
         }
 
-        if (frontGunIndex > pam.guns.Capacity - 1)
+        if (frontGunIndex > pam.sideCount - 1)
             frontGunIndex = 0;
         if (frontGunIndex < 0)
-            frontGunIndex = pam.guns.Capacity - 1;
+            frontGunIndex = pam.sideCount - 1;
         canRotateGuns = false;
         StartCoroutine("ScrollDelay");
     }
 
-    public void SetGunPosition()
+    public void SetGunPositions()
     {
         frontGunIndex = 0;
         float angle = 360f / pam.sideCount;
@@ -82,5 +113,19 @@ public class GunPositionManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         canRotateGuns = true;
+    }
+    IEnumerator PickupDelay()
+    {
+        yield return new WaitForSeconds(0.5f);
+        canPickupGuns = true;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        print("Collided with: " + collision.gameObject.name);
+        if (collision.tag == "Gun")
+        {
+            PickUpGun(collision.gameObject);
+        }
     }
 }
