@@ -14,14 +14,24 @@ public class GunPositionManager : MonoBehaviour
     private void Start()
     {
         pam = GetComponentInParent<playerAttackManager>();
-
         SetGunPositions();
     }
 
-    public void AddSide()
+    public void AlterSideCount(int amount)
     {
-        pam.sideCount++;
-        pam.guns.Add(null);
+        pam.sideCount += amount;
+        if(amount > 0)
+        {
+            for (int i = amount; i > 0; i--)
+                pam.guns.Add(null);
+        }
+        else
+        {
+            for (int i = amount; i < 0; i++)
+                if(pam.guns[pam.guns.Count - 1] != null)
+                    DropGun(true);
+                pam.guns.RemoveAt(pam.guns.Count - 1);
+        }
         SetGunPositions();
     }
 
@@ -35,6 +45,14 @@ public class GunPositionManager : MonoBehaviour
         if (Input.GetButtonDown("DropGun"))
         {
             DropGun();
+        }
+        if (Input.GetKeyDown(KeyCode.KeypadPlus))
+        {
+            AlterSideCount(1);
+        }
+        if (Input.GetKeyDown(KeyCode.KeypadMinus))
+        {
+            AlterSideCount(-1);
         }
     }
 
@@ -59,16 +77,28 @@ public class GunPositionManager : MonoBehaviour
         }
     }
 
-    public void DropGun()
+    public void DropGun(bool removeSide = false)
     {
-        if(pam.guns[frontGunIndex] != null)
+        if (!removeSide)
         {
-            GameObject gunToDrop = pam.guns[frontGunIndex];
-            pam.guns[frontGunIndex] = null;
+            if (pam.guns[frontGunIndex] != null)
+            {
+                GameObject gunToDrop = pam.guns[frontGunIndex];
+                pam.guns[frontGunIndex] = null;
+                gunToDrop.transform.SetParent(null);
+                gunToDrop.GetComponent<Gun>().Dropped();
+                StartCoroutine("PickupDelay");
+            }
+        }
+        else
+        {
+            GameObject gunToDrop = pam.guns[pam.guns.Count - 1];
+            pam.guns[pam.guns.Count - 1] = null;
             gunToDrop.transform.SetParent(null);
             gunToDrop.GetComponent<Gun>().Dropped();
             StartCoroutine("PickupDelay");
         }
+        
     }
 
     public void RotateGuns(float direction)
@@ -100,8 +130,12 @@ public class GunPositionManager : MonoBehaviour
         float angle = 360f / pam.sideCount;
         for(int i = 0; i < pam.guns.Capacity; i++)
         {
-            pam.guns[i].transform.position = front.transform.position;
-            pam.guns[i].transform.rotation = front.transform.rotation;
+            if(pam.guns[i] != null)
+            {
+                pam.guns[i].transform.position = front.transform.position;
+                pam.guns[i].transform.rotation = front.transform.rotation;
+            }
+            
 
             transform.Rotate(new Vector3(0, 0, -angle));
         }
