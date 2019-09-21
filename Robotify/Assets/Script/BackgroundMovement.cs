@@ -5,8 +5,8 @@ using UnityEngine;
 public class BackgroundMovement : MonoBehaviour
 {
     GameObject player;
-    float distance = 16f;
-    float length = 30.72f;
+    float distance = 31f;
+    float length = 60f;
     void Start()
     {
         player = GameObject.Find("Player");
