@@ -7,7 +7,7 @@ public class playerAttackManager : MonoBehaviour
     public int ammo;
     public int sideCount = 4;
     public GunPositionManager gpm;
-    public GameObject[] guns;
+    public List<GameObject> guns;
 
     private void Update()
     {
@@ -17,10 +17,11 @@ public class playerAttackManager : MonoBehaviour
         }
         if (Input.GetButtonDown("Fire2"))
         {
-            gpm.UpdateGunPositions();
+            gpm.SetGunPosition();
         }
 
     }
+
     private void FireGuns()
     {
         foreach (GameObject gun in guns)

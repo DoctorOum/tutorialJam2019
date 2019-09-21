@@ -229,6 +229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33410798cf6c88041b759c9985ebd826, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ammo: 0
   sideCount: 4
   gpm: {fileID: 2052812054}
   guns:
@@ -388,7 +389,7 @@ PrefabInstance:
     - target: {fileID: 3883077725205140732, guid: a17efdd1406ee6240b1397df7c3ce7d6,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3883077725205140732, guid: a17efdd1406ee6240b1397df7c3ce7d6,
         type: 3}
@@ -692,7 +693,7 @@ PrefabInstance:
     - target: {fileID: 3472189163397089447, guid: c94fc67400af4f949808a4b93865bc83,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3472189163397089447, guid: c94fc67400af4f949808a4b93865bc83,
         type: 3}
@@ -807,7 +808,7 @@ PrefabInstance:
     - target: {fileID: 3883077725205140732, guid: a17efdd1406ee6240b1397df7c3ce7d6,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3883077725205140732, guid: a17efdd1406ee6240b1397df7c3ce7d6,
         type: 3}
@@ -822,6 +823,21 @@ PrefabInstance:
     - target: {fileID: 3883077725205140732, guid: a17efdd1406ee6240b1397df7c3ce7d6,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3883077724858577665, guid: a17efdd1406ee6240b1397df7c3ce7d6,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3883077724858577665, guid: a17efdd1406ee6240b1397df7c3ce7d6,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.64591235
+      objectReference: {fileID: 0}
+    - target: {fileID: 3883077724858577665, guid: a17efdd1406ee6240b1397df7c3ce7d6,
+        type: 3}
+      propertyPath: m_Color.b
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -843,7 +859,7 @@ GameObject:
   - component: {fileID: 2052812053}
   - component: {fileID: 2052812054}
   m_Layer: 0
-  m_Name: GunSpawn
+  m_Name: GunOrganizer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -876,7 +892,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb998ded9f1f6ea4aab6642c44ef4016, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  frontGunIndex: 0
   front: {fileID: 1474143360}
+  gunContainer: {fileID: 1930872462}
 --- !u!1001 &2116876940
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -927,7 +945,7 @@ PrefabInstance:
     - target: {fileID: 3472189163397089447, guid: c94fc67400af4f949808a4b93865bc83,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3472189163397089447, guid: c94fc67400af4f949808a4b93865bc83,
         type: 3}
