@@ -13,7 +13,6 @@ public class EnemySpawn : MonoBehaviour
     {
         parent = GameObject.Find("Enemy Container");
     }
-    
     void Update()
     {
         if (GameObject.FindGameObjectsWithTag("Enemy").Length < enemyAmount)

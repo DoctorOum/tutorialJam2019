@@ -1278,11 +1278,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 941493856}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6a36ce2398b56348b1c9ce40750c946, type: 3}
+  m_Script: {fileID: 11500000, guid: 33410798cf6c88041b759c9985ebd826, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
-  fireRate: 0
   guns: []
 --- !u!50 &941493858
 Rigidbody2D:
@@ -1343,9 +1341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bd34ec3ec4d8d5429ffe15b6d1d177c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.2
-  camera: {fileID: 0}
-  smooth: 0
+  speed: 0.5
 --- !u!4 &941493861
 Transform:
   m_ObjectHideFlags: 0
