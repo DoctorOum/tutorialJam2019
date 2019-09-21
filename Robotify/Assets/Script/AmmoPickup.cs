@@ -12,7 +12,7 @@ public class AmmoPickup : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         pam = player.GetComponent<playerAttackManager>();        
-        ammo = (int)(pam.sideCount * pam.guns.Length * Random.Range(.7f, 1.3f));
+        ammo = (int)(pam.sideCount * pam.guns.Count * Random.Range(.7f, 1.3f));
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
