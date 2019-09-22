@@ -23,6 +23,9 @@ public class Gun : MonoBehaviour
     public bool isPickup;
     private int decayTime = 10;
 
+    [Header("Other")]
+    public playerAttackManager pam;
+
     private void Start()
     {
         if (!isPickup)
@@ -86,6 +89,7 @@ public class Gun : MonoBehaviour
         foreach (GameObject spawnPoint in projectileSpawns)
         {
             GameObject shot = Instantiate(projectile, spawnPoint.transform.position, transform.rotation);
+            pam.ammo--;
             Projectile currentP = shot.GetComponent<Projectile>();
             if (isEnemy)
             {

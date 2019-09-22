@@ -66,9 +66,12 @@ public class GunPositionManager : MonoBehaviour
                 pam.guns[frontGunIndex] = gunToPickup.transform.parent.gameObject;
                 gunToPickup.GetComponent<SpriteRenderer>().color = Color.yellow;
                 print("Front Gun Index " + frontGunIndex + " is now " + pam.guns[frontGunIndex]);
+
                 gunToPickup.transform.parent.SetParent(gunContainer.transform);
                 gunToPickup.transform.parent.transform.position = front.transform.position;
                 gunToPickup.transform.parent.transform.rotation = front.transform.rotation;
+
+                gunToPickup.GetComponentInParent<Gun>().pam = pam;
                 gunToPickup.GetComponentInParent<Gun>().PickedUp();
             }
             else

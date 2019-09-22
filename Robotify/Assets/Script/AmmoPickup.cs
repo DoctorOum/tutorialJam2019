@@ -6,7 +6,7 @@ public class AmmoPickup : MonoBehaviour
 {
     playerAttackManager pam;
     GameObject player;
-    int ammo;
+    public int ammo;
 
     void Start()
     {
