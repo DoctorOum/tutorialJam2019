@@ -18,7 +18,8 @@ public class Gun : MonoBehaviour
     public bool AlternateBarrels;
     private bool firing;
 
-    [Header("Dropped State")]
+    [Header("States")]
+    public bool isEnemy;
     public bool isPickup;
 
     public void Dropped()
@@ -47,7 +48,15 @@ public class Gun : MonoBehaviour
         {
             GameObject shot = Instantiate(projectile, spawnPoint.transform.position, transform.rotation);
             Projectile currentP = shot.GetComponent<Projectile>();
-
+            if (isEnemy)
+            {
+                shot.layer = 9;
+            }
+            else
+            {
+                shot.layer = 10;
+            }
+            
             if (SpreadDamageOverBullets)
             {
                 currentP.damage = (damage * damageMult)/projectileSpawns.Length;

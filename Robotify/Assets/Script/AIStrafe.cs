@@ -9,6 +9,7 @@ public class AIStrafe : MonoBehaviour
     float strafeDistance;
     public float speed = 2;
     public LayerMask PlayerLayer;
+    public bool inRange;
     
     void Start()
     {
@@ -21,6 +22,7 @@ public class AIStrafe : MonoBehaviour
         Vector2 displacement = new Vector2(Mathf.Abs(Player.transform.position.x - gameObject.transform.position.x), Mathf.Abs(Player.transform.position.y - gameObject.transform.position.y));
         if (Mathf.Sqrt(displacement.x * displacement.x + displacement.y * displacement.y) < sightDistance)
         {
+            inRange = true;
             float angle;
             Vector3 relative = transform.InverseTransformPoint(Player.transform.position);
             angle = Mathf.Atan2(relative.x, relative.y) * Mathf.Rad2Deg;
@@ -50,6 +52,10 @@ public class AIStrafe : MonoBehaviour
                     transform.Translate(Vector3.down * Time.deltaTime);
                 }
             }
+        }
+        else
+        {
+            inRange = false;
         }
     }
 }
