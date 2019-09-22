@@ -21,6 +21,7 @@ public class Gun : MonoBehaviour
     [Header("States")]
     public bool isEnemy;
     public bool isPickup;
+    private int decayTime = 10;
 
     private void Start()
     {
@@ -41,6 +42,7 @@ public class Gun : MonoBehaviour
         isEnemy = false;
         isPickup = true;
         StartCoroutine("DropDelay");
+        StartCoroutine("DecayTimer");
     }
 
     public void Fire()
@@ -58,6 +60,26 @@ public class Gun : MonoBehaviour
         yield return new WaitForSeconds(1f);
         isPickup = true;
         GetComponentInChildren<BoxCollider2D>().enabled = true;
+    }
+    IEnumerator DecayTimer()
+    {
+        print("isPickup: " + isPickup);
+        for(int i = decayTime; i >= 0; i--)
+        {
+            if (!isPickup)
+            {
+                print("picked Up");
+                break;
+            }
+            yield return new WaitForSeconds(1f);
+        }
+        if (isPickup)
+        {
+            print("Killed it");
+            Destroy(gameObject);
+        }
+        
+
     }
     IEnumerator FIRE()
     {
