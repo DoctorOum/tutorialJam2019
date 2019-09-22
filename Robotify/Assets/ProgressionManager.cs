@@ -8,7 +8,9 @@ public class ProgressionManager : MonoBehaviour
     public int score = 0;
     public float playerHealth = 100;
 
+    [Header("Things")]
     public GunPositionManager gpm;
+    public GameObject deathScreen;
 
     public void onKill(float maxHealth)
     {
@@ -26,6 +28,7 @@ public class ProgressionManager : MonoBehaviour
         if(playerHealth <= 0)
         {
             print("Player Death");
+            deathScreen.SetActive(true);
         }
     }
      

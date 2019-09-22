@@ -6,7 +6,7 @@ public class GunPositionManager : MonoBehaviour
 {
     public int frontGunIndex = 0;
     private playerAttackManager pam;
-    [SerializeField] private GameObject front;
+    [SerializeField] private Transform front;
     [SerializeField] private GameObject gunContainer;
     private bool canRotateGuns = true;
     private bool canPickupGuns = true;
@@ -42,12 +42,26 @@ public class GunPositionManager : MonoBehaviour
         if(amount > 0)
         {
             audio.PlayOneShot(gainSideSound);
+            front = sprites[pam.sideCount - 3].GetComponentInChildren<Transform>();
+            if (sprites[pam.sideCount - 2] != null)
+            {
+                sprites[pam.sideCount - 2].SetActive(false);
+            }
+            sprites[pam.sideCount - 3].SetActive(true);
+
             for (int i = amount; i > 0; i--)
                 pam.guns.Add(null);
         }
         else
         {
             audio.PlayOneShot(loseSideSound);
+            front = sprites[pam.sideCount - 3].GetComponentInChildren<Transform>();
+            if (sprites[pam.sideCount - 3] != null)
+            {
+                sprites[pam.sideCount - 2].SetActive(false);
+            }
+            sprites[pam.sideCount - 2].SetActive(true);
+
             for (int i = amount; i < 0; i++)
                 if(pam.guns[pam.guns.Count - 1] != null)
                     DropGun(true);
