@@ -1227,13 +1227,21 @@ MonoBehaviour:
 
 
 
-    Mikey Schubert - Programmer/Producer
+    Michael Schubert - Programmer/Producer
 
-    Tritsan Sistare - Programmer/UI Programmer/Art Implementation
+    Tritsan Sistare - Programmer/UI Programmer/Art Implementation/Animation/AI Programmer
 
     Hannah Wright - Composer/Audio Engineer
 
-    Christian Fonceca -Designer/Artist'
+    Christian Fonceca -Designer/Artist
+
+    Vladimir Karashchuk - made singular gun
+
+    Sean Sarmiento - AI Programmer
+
+    Tabitha Young - RIP
+
+    Ryan Casey - Shader Programmer'
 --- !u!222 &1719066096
 CanvasRenderer:
   m_ObjectHideFlags: 0
