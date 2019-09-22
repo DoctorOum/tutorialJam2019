@@ -22,8 +22,24 @@ public class Gun : MonoBehaviour
     public bool isEnemy;
     public bool isPickup;
 
+    private void Start()
+    {
+        if (!isPickup)
+        {
+            GetComponentInChildren<BoxCollider2D>().enabled = false;
+        }
+    }
+
+    public void PickedUp()
+    {
+        GetComponentInChildren<BoxCollider2D>().enabled = false;
+        isPickup = false;
+    }
+
     public void Dropped()
     {
+        isEnemy = false;
+        isPickup = true;
         StartCoroutine("DropDelay");
     }
 
@@ -41,6 +57,7 @@ public class Gun : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         isPickup = true;
+        GetComponentInChildren<BoxCollider2D>().enabled = true;
     }
     IEnumerator FIRE()
     {
@@ -50,10 +67,12 @@ public class Gun : MonoBehaviour
             Projectile currentP = shot.GetComponent<Projectile>();
             if (isEnemy)
             {
+                shot.tag = "EnemyProjectile";
                 shot.layer = 9;
             }
             else
             {
+                shot.tag = "PlayerProjectile";
                 shot.layer = 10;
             }
             

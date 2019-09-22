@@ -34,6 +34,16 @@ public class EnemyManager : MonoBehaviour
         SetGunPositions();
     }
 
+    private void OnDestroy()
+    {
+        float trial = Random.Range(0f, 99f);
+        if (trial < 20)
+        {
+            GameObject NewGun = Instantiate(spawnManager.guns[Random.Range(0, spawnManager.guns.Count)], transform.position, Quaternion.identity);
+            NewGun.GetComponent<Gun>().Dropped();
+        }
+    }
+
     private void Update()
     {
         if (ai.inRange)
@@ -66,7 +76,7 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    void Hit(float amount)
+    public void Hit(float amount)
     {
         health -= amount;
         if(health <= 0)
@@ -77,7 +87,8 @@ public class EnemyManager : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Projectile")
+        print("I have been hit");
+        if(collision.gameObject.tag == "PlayerProjectile")
         {
             Hit(collision.gameObject.GetComponent<Projectile>().damage);
         }

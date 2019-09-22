@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7351567595399310290}
   m_Layer: 2
   m_Name: Rocket Gun
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,7 +29,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6065308296683191918}
-  - {fileID: 808582015868456591}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -56,8 +55,8 @@ MonoBehaviour:
   projectile: {fileID: 601418964300297797, guid: 3c6cb40fb554de648971df826fb66956,
     type: 3}
   AlternateBarrels: 0
-  isEnemy: 1
-  isPickup: 0
+  isEnemy: 0
+  isPickup: 1
 --- !u!1 &3964049665722502699
 GameObject:
   m_ObjectHideFlags: 0
@@ -83,11 +82,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3964049665722502699}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.296, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
+  m_LocalPosition: {x: 0, y: 2.9600024, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 7638459805690869240}
-  m_RootOrder: 1
+  m_Father: {fileID: 6065308296683191918}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2100824418534863156
 SpriteRenderer:
@@ -151,8 +150,8 @@ GameObject:
   - component: {fileID: 1186646378122001802}
   - component: {fileID: 3295394910202879910}
   m_Layer: 2
-  m_Name: Guns_Thingy_0
-  m_TagString: Untagged
+  m_Name: base
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -167,7 +166,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 808582015868456591}
   m_Father: {fileID: 7638459805690869240}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

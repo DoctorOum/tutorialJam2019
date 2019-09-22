@@ -11,4 +11,8 @@ public class Projectile : MonoBehaviour
     {
         transform.Translate(Vector2.up * Time.deltaTime * flightSeed);
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Destroy(gameObject);
+    }
 }

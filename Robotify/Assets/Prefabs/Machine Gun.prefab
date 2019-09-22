@@ -25,11 +25,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 232703508432279468}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.333, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
+  m_LocalPosition: {x: 0, y: 3.33, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4101941428939686536}
-  m_RootOrder: 1
+  m_Father: {fileID: 9096311096136420021}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3458543367293486013
 SpriteRenderer:
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 6404395349376718569}
   m_Layer: 2
   m_Name: Machine Gun
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -110,7 +110,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 9096311096136420021}
-  - {fileID: 4736703816345701694}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -137,8 +136,8 @@ MonoBehaviour:
   projectile: {fileID: 601418964300297797, guid: 3c6cb40fb554de648971df826fb66956,
     type: 3}
   AlternateBarrels: 0
-  isEnemy: 1
-  isPickup: 0
+  isEnemy: 0
+  isPickup: 1
 --- !u!1 &8156932050464326729
 GameObject:
   m_ObjectHideFlags: 0
@@ -151,8 +150,8 @@ GameObject:
   - component: {fileID: 2976206681214232158}
   - component: {fileID: 954668202578191059}
   m_Layer: 2
-  m_Name: Guns_Thingy_0
-  m_TagString: Untagged
+  m_Name: base
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -167,7 +166,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4736703816345701694}
   m_Father: {fileID: 4101941428939686536}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

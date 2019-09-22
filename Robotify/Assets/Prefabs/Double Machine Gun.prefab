@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6347720710214249423}
   m_Layer: 2
   m_Name: Double Machine Gun
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,8 +29,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6347720710831940451}
-  - {fileID: 6347720711414826402}
-  - {fileID: 6347720710830359376}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -47,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 4
-  fireRate: 0.2
+  fireRate: 0.1
   projectileSpeed: 10
   damageMult: 1
   fireRateMult: 1
@@ -58,8 +56,8 @@ MonoBehaviour:
   projectile: {fileID: 601418964300297797, guid: 3c6cb40fb554de648971df826fb66956,
     type: 3}
   AlternateBarrels: 1
-  isEnemy: 1
-  isPickup: 0
+  isEnemy: 0
+  isPickup: 1
 --- !u!1 &6347720710830359382
 GameObject:
   m_ObjectHideFlags: 0
@@ -85,11 +83,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6347720710830359382}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.11, y: 0.33, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
+  m_LocalPosition: {x: 1.0999949, y: 3.2999964, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 6347720710214249416}
-  m_RootOrder: 2
+  m_Father: {fileID: 6347720710831940451}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6347720710830359383
 SpriteRenderer:
@@ -153,8 +151,8 @@ GameObject:
   - component: {fileID: 6347720710831940461}
   - component: {fileID: 6347720710831940460}
   m_Layer: 2
-  m_Name: Guns_Thingy_0
-  m_TagString: Untagged
+  m_Name: base
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -169,7 +167,9 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 6347720711414826402}
+  - {fileID: 6347720710830359376}
   m_Father: {fileID: 6347720710214249416}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -274,11 +274,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6347720711414826400}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.11, y: 0.33, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
+  m_LocalPosition: {x: -1.0999954, y: 3.2999992, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 6347720710214249416}
-  m_RootOrder: 1
+  m_Father: {fileID: 6347720710831940451}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6347720711414826401
 SpriteRenderer:
