@@ -32,29 +32,51 @@ public class GunPositionManager : MonoBehaviour
         for(int i = 1; i < sprites.Length - 1; i++)
         {
             print("depression");
-            sprites[i].GetComponent<SpriteRenderer>().enabled = false;
+            sprites[i].SetActive(false);
         }
     }
 
     public void AlterSideCount(int amount)
     {
-        pam.sideCount += amount;
-        if(amount > 0)
+        if((pam.sideCount + amount) > 2)
         {
-            audio.PlayOneShot(gainSideSound);
-            for (int i = amount; i > 0; i--)
-                pam.guns.Add(null);
-        }
-        else
-        {
-            audio.PlayOneShot(loseSideSound);
-            for (int i = amount; i < 0; i++)
-                if(pam.guns[pam.guns.Count - 1] != null)
-                    DropGun(true);
-                pam.guns.RemoveAt(pam.guns.Count - 1);
-        }
+            pam.sideCount += amount;
+            int current = pam.sideCount - 3;
+            print("NewSides: " + pam.sideCount);
+            if (amount > 0)
+            {
+                audio.PlayOneShot(gainSideSound);   
+                front = sprites[current].GetComponentInChildren<FrontRefrence>().front;
+                if ((current - 1) >= 0)
+                {
+                    sprites[current - 1].SetActive(false);
+                }
+                sprites[current].SetActive(true);
 
-        SetGunPositions();
+                for (int i = amount; i > 0; i--)
+                    pam.guns.Add(null);
+            }
+            else
+            {
+                audio.PlayOneShot(loseSideSound);
+                front = sprites[current].GetComponentInChildren<FrontRefrence>().front;
+                if ((current + 1) >= 0)
+                {
+                    sprites[current + 1].SetActive(false);
+                }
+                sprites[current].SetActive(true);
+
+                for (int i = amount; i < 0; i++)
+                {
+                    if (pam.guns[pam.guns.Count - 1] != null)
+                        DropGun(true);
+                    pam.guns.RemoveAt(pam.guns.Count - 1);
+                }
+
+            }
+            SetGunPositions();
+        }
+        
     }
 
     private void Update()
@@ -167,7 +189,7 @@ public class GunPositionManager : MonoBehaviour
     {
         frontGunIndex = 0;
         float angle = 360f / pam.sideCount;
-        for(int i = 0; i < pam.guns.Capacity -1; i++)
+        for(int i = 0; i < pam.guns.Capacity; i++)
         {
             if(pam.guns[i] != null)
             {
