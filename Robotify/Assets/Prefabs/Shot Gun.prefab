@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 9219704361910726818}
   m_Layer: 2
   m_Name: Shot Gun
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -59,7 +59,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3540576724435536547}
-  - {fileID: 7783737376862269565}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -76,7 +75,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 15
-  fireRate: 3
+  fireRate: 1
   projectileSpeed: 10
   damageMult: 1
   fireRateMult: 1
@@ -87,8 +86,8 @@ MonoBehaviour:
   projectile: {fileID: 601418964300297797, guid: 3c6cb40fb554de648971df826fb66956,
     type: 3}
   AlternateBarrels: 0
-  isEnemy: 1
-  isPickup: 0
+  isEnemy: 0
+  isPickup: 1
 --- !u!1 &2450773383583515766
 GameObject:
   m_ObjectHideFlags: 0
@@ -101,8 +100,8 @@ GameObject:
   - component: {fileID: 1361092664286588239}
   - component: {fileID: 6726423848863380117}
   m_Layer: 2
-  m_Name: Guns_Thingy_0
-  m_TagString: Untagged
+  m_Name: base
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -117,7 +116,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 7783737376862269565}
   m_Father: {fileID: 466314932350379768}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -208,7 +208,7 @@ GameObject:
   - component: {fileID: 7783737376862269565}
   - component: {fileID: 891213971232738368}
   m_Layer: 2
-  m_Name: Guns_Thingy_3
+  m_Name: barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -222,13 +222,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4398254470786187827}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.273, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
+  m_LocalPosition: {x: 0, y: 2.7299988, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4314008087532496648}
   - {fileID: 7987693341898471218}
-  m_Father: {fileID: 466314932350379768}
-  m_RootOrder: 1
+  m_Father: {fileID: 3540576724435536547}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &891213971232738368
 SpriteRenderer:

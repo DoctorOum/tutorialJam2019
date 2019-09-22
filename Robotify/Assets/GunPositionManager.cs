@@ -68,7 +68,7 @@ public class GunPositionManager : MonoBehaviour
                 gunToPickup.transform.parent.SetParent(gunContainer.transform);
                 gunToPickup.transform.parent.transform.position = front.transform.position;
                 gunToPickup.transform.parent.transform.rotation = front.transform.rotation;
-                gunToPickup.GetComponentInParent<Gun>().isPickup = false;
+                gunToPickup.GetComponentInParent<Gun>().PickedUp();
             }
             else
             {

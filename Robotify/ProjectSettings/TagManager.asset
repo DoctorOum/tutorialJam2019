@@ -8,6 +8,8 @@ TagManager:
   - Ammo
   - Projectile
   - Gun
+  - EnemyProjectile
+  - PlayerProjectile
   layers:
   - Default
   - TransparentFX
