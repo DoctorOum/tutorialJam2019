@@ -46,7 +46,11 @@ public class EnemyManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        pm.killCount++;
+        if(pm != null)
+        {
+            pm.killCount++;
+        }
+        
         float trial = Random.Range(0f, 99f);
         if (trial < 20)
         {

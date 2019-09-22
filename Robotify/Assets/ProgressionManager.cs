@@ -15,6 +15,7 @@ public class ProgressionManager : MonoBehaviour
     public void onKill(float maxHealth)
     {
         killCount++;
+        score += 100;
         playerHealth += maxHealth * 0.5f;
         if(playerHealth >= 200)
         {

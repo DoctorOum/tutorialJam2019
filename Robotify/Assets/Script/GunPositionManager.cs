@@ -6,7 +6,7 @@ public class GunPositionManager : MonoBehaviour
 {
     public int frontGunIndex = 0;
     private playerAttackManager pam;
-    [SerializeField] private Transform front;
+    [SerializeField] private GameObject front;
     [SerializeField] private GameObject gunContainer;
     private bool canRotateGuns = true;
     private bool canPickupGuns = true;
@@ -32,43 +32,51 @@ public class GunPositionManager : MonoBehaviour
         for(int i = 1; i < sprites.Length - 1; i++)
         {
             print("depression");
-            sprites[i].GetComponent<SpriteRenderer>().enabled = false;
+            sprites[i].SetActive(false);
         }
     }
 
     public void AlterSideCount(int amount)
     {
-        pam.sideCount += amount;
-        if(amount > 0)
+        if((pam.sideCount + amount) > 2)
         {
-            audio.PlayOneShot(gainSideSound);
-            front = sprites[pam.sideCount - 3].GetComponentInChildren<Transform>();
-            if (sprites[pam.sideCount - 2] != null)
+            pam.sideCount += amount;
+            int current = pam.sideCount - 3;
+            print("NewSides: " + pam.sideCount);
+            if (amount > 0)
             {
-                sprites[pam.sideCount - 2].SetActive(false);
-            }
-            sprites[pam.sideCount - 3].SetActive(true);
+                audio.PlayOneShot(gainSideSound);   
+                front = sprites[current].GetComponentInChildren<FrontRefrence>().front;
+                if ((current - 1) >= 0)
+                {
+                    sprites[current - 1].SetActive(false);
+                }
+                sprites[current].SetActive(true);
 
-            for (int i = amount; i > 0; i--)
-                pam.guns.Add(null);
-        }
-        else
-        {
-            audio.PlayOneShot(loseSideSound);
-            front = sprites[pam.sideCount - 3].GetComponentInChildren<Transform>();
-            if (sprites[pam.sideCount - 3] != null)
+                for (int i = amount; i > 0; i--)
+                    pam.guns.Add(null);
+            }
+            else
             {
-                sprites[pam.sideCount - 2].SetActive(false);
+                audio.PlayOneShot(loseSideSound);
+                front = sprites[current].GetComponentInChildren<FrontRefrence>().front;
+                if ((current + 1) >= 0)
+                {
+                    sprites[current + 1].SetActive(false);
+                }
+                sprites[current].SetActive(true);
+
+                for (int i = amount; i < 0; i++)
+                {
+                    if (pam.guns[pam.guns.Count - 1] != null)
+                        DropGun(true);
+                    pam.guns.RemoveAt(pam.guns.Count - 1);
+                }
+
             }
-            sprites[pam.sideCount - 2].SetActive(true);
-
-            for (int i = amount; i < 0; i++)
-                if(pam.guns[pam.guns.Count - 1] != null)
-                    DropGun(true);
-                pam.guns.RemoveAt(pam.guns.Count - 1);
+            SetGunPositions();
         }
-
-        SetGunPositions();
+        
     }
 
     private void Update()
@@ -181,7 +189,7 @@ public class GunPositionManager : MonoBehaviour
     {
         frontGunIndex = 0;
         float angle = 360f / pam.sideCount;
-        for(int i = 0; i < pam.guns.Capacity -1; i++)
+        for(int i = 0; i < pam.guns.Capacity; i++)
         {
             if(pam.guns[i] != null)
             {
