@@ -60,10 +60,11 @@ public class GunPositionManager : MonoBehaviour
     {
         if (canPickupGuns && gunToPickup.GetComponentInParent<Gun>().isPickup)
         {
-            print("Front Gun Index " + frontGunIndex + " is " + pam.guns[frontGunIndex]);
+            //print("Front Gun Index " + frontGunIndex + " is " + pam.guns[frontGunIndex]);
             if (pam.guns[frontGunIndex] == null)
             {
                 pam.guns[frontGunIndex] = gunToPickup.transform.parent.gameObject;
+                gunToPickup.GetComponent<SpriteRenderer>().color = Color.yellow;
                 print("Front Gun Index " + frontGunIndex + " is now " + pam.guns[frontGunIndex]);
                 gunToPickup.transform.parent.SetParent(gunContainer.transform);
                 gunToPickup.transform.parent.transform.position = front.transform.position;
@@ -86,6 +87,7 @@ public class GunPositionManager : MonoBehaviour
                 GameObject gunToDrop = pam.guns[frontGunIndex];
                 pam.guns[frontGunIndex] = null;
                 gunToDrop.transform.SetParent(null);
+                gunToDrop.GetComponentInChildren<SpriteRenderer>().color = Color.white;
                 gunToDrop.GetComponent<Gun>().Dropped();
                 StartCoroutine("PickupDelay");
             }
@@ -95,6 +97,7 @@ public class GunPositionManager : MonoBehaviour
             GameObject gunToDrop = pam.guns[pam.guns.Count - 1];
             pam.guns[pam.guns.Count - 1] = null;
             gunToDrop.transform.SetParent(null);
+            gunToDrop.GetComponentInChildren<SpriteRenderer>().color = Color.white;
             gunToDrop.GetComponent<Gun>().Dropped();
             StartCoroutine("PickupDelay");
         }
@@ -103,7 +106,9 @@ public class GunPositionManager : MonoBehaviour
 
     public void RotateGuns(float direction)
     {
-        
+        if (pam.guns[frontGunIndex] != null)
+            pam.guns[frontGunIndex].GetComponentInChildren<SpriteRenderer>().color = Color.white;
+
         float angle = 360f / pam.sideCount;
         if(direction > 0)
         {
@@ -121,6 +126,10 @@ public class GunPositionManager : MonoBehaviour
         if (frontGunIndex < 0)
             frontGunIndex = pam.sideCount - 1;
         canRotateGuns = false;
+        if(pam.guns[frontGunIndex] != null)
+        {
+            pam.guns[frontGunIndex].GetComponentInChildren<SpriteRenderer>().color = Color.yellow;
+        }
         StartCoroutine("ScrollDelay");
     }
 
