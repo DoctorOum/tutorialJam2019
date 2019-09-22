@@ -1410,6 +1410,15 @@ MonoBehaviour:
   frontGunIndex: 0
   front: {fileID: 0}
   gunContainer: {fileID: 0}
+  sr: {fileID: 0}
+  sprites: []
+  audio: {fileID: 0}
+  pickupGunSound: {fileID: 0}
+  dropGunSound: {fileID: 0}
+  gainSideSound: {fileID: 0}
+  loseSideSound: {fileID: 0}
+  gunLossSound: {fileID: 0}
+  rotate: {fileID: 0}
 --- !u!224 &1323663203 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3848022657160499185, guid: d6825b05dd3814949a4faba4fa9c86e0,
