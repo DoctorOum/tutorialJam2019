@@ -31,7 +31,6 @@ public class GunPositionManager : MonoBehaviour
         SetGunPositions();
         for(int i = 1; i < sprites.Length - 1; i++)
         {
-            print("depression");
             sprites[i].SetActive(false);
         }
     }
@@ -42,7 +41,7 @@ public class GunPositionManager : MonoBehaviour
         {
             pam.sideCount += amount;
             int current = pam.sideCount - 3;
-            print("NewSides: " + pam.sideCount);
+            print("NewSides: " + pam.guns.Capacity);
             if (amount > 0)
             {
                 audio.PlayOneShot(gainSideSound);   
@@ -74,7 +73,9 @@ public class GunPositionManager : MonoBehaviour
                 }
 
             }
+            print("Made it to end");
             SetGunPositions();
+            //RotateGuns(1f, true);
         }
         
     }
@@ -155,49 +156,89 @@ public class GunPositionManager : MonoBehaviour
         
     }
 
-    public void RotateGuns(float direction)
+    public void RotateGuns(float direction, bool sideChange = false)
     {
-        audio.PlayOneShot(rotate);
-        if (pam.guns[frontGunIndex] != null)
-            pam.guns[frontGunIndex].GetComponentInChildren<SpriteRenderer>().color = Color.white;
+        print("RG was called");
+        if (sideChange)
+        {
+            //gunContainer.transform.rotation = new Quaternion(0, 0, 0, 0);
+            print("rotation " + gunContainer.transform.rotation);
+            for(int i = frontGunIndex; i > 0; i--)
+            {
+                if (pam.guns[frontGunIndex] != null)
+                    pam.guns[frontGunIndex].GetComponentInChildren<SpriteRenderer>().color = Color.white;
 
-        float angle = 360f / pam.sideCount;
-        if(direction > 0)
-        {
-            gunContainer.transform.Rotate(new Vector3(0, 0, angle));
-            frontGunIndex++;
-        }
-        else if(direction < 0)
-        {
-            gunContainer.transform.Rotate(new Vector3(0, 0, -angle));
-            frontGunIndex--;
-        }
+                float angle = 360f / pam.sideCount;
+                if (direction > 0)
+                {
+                    gunContainer.transform.Rotate(new Vector3(0, 0, angle));
+                    frontGunIndex++;
+                }
+                else if (direction < 0)
+                {
+                    gunContainer.transform.Rotate(new Vector3(0, 0, -angle));
+                    frontGunIndex--;
+                }
 
-        if (frontGunIndex > pam.sideCount - 1)
-            frontGunIndex = 0;
-        if (frontGunIndex < 0)
-            frontGunIndex = pam.sideCount - 1;
-        canRotateGuns = false;
-        if(pam.guns[frontGunIndex] != null)
-        {
-            pam.guns[frontGunIndex].GetComponentInChildren<SpriteRenderer>().color = Color.yellow;
+                if (frontGunIndex > pam.sideCount - 1)
+                    frontGunIndex = 0;
+                if (frontGunIndex < 0)
+                    frontGunIndex = pam.sideCount - 1;
+                canRotateGuns = false;
+                if (pam.guns[frontGunIndex] != null)
+                {
+                    pam.guns[frontGunIndex].GetComponentInChildren<SpriteRenderer>().color = Color.yellow;
+                }
+            }
         }
-        StartCoroutine("ScrollDelay");
+        else
+        {
+            audio.PlayOneShot(rotate);
+
+            if (pam.guns[frontGunIndex] != null)
+                pam.guns[frontGunIndex].GetComponentInChildren<SpriteRenderer>().color = Color.white;
+
+            float angle = 360f / pam.sideCount;
+            if (direction > 0)
+            {
+                gunContainer.transform.Rotate(new Vector3(0, 0, angle));
+                frontGunIndex++;
+            }
+            else if (direction < 0)
+            {
+                gunContainer.transform.Rotate(new Vector3(0, 0, -angle));
+                frontGunIndex--;
+            }
+
+            if (frontGunIndex > pam.sideCount - 1)
+                frontGunIndex = 0;
+            if (frontGunIndex < 0)
+                frontGunIndex = pam.sideCount - 1;
+            canRotateGuns = false;
+            if (pam.guns[frontGunIndex] != null)
+            {
+                pam.guns[frontGunIndex].GetComponentInChildren<SpriteRenderer>().color = Color.yellow;
+            }
+            StartCoroutine("ScrollDelay");
+        }
+        
+
+        
     }
 
     public void SetGunPositions()
     {
         frontGunIndex = 0;
+        print("Gun Capacity " + pam.guns.Count);
         float angle = 360f / pam.sideCount;
-        for(int i = 0; i < pam.guns.Capacity; i++)
+        for (int i = 0; i < pam.guns.Count; i++)
         {
-            if(pam.guns[i] != null)
+            print(i);
+            if (pam.guns[i] != null)
             {
                 pam.guns[i].transform.position = front.transform.position;
                 pam.guns[i].transform.rotation = front.transform.rotation;
             }
-            
-
             transform.Rotate(new Vector3(0, 0, -angle));
         }
 
