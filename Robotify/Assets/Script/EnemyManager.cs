@@ -24,7 +24,7 @@ public class EnemyManager : MonoBehaviour
     {
         pm = GameObject.FindGameObjectWithTag("ProgressionManager").GetComponent<ProgressionManager>();
 
-        maxHealth = 10 + pm.killCount * (pm.score * 0.02f);
+        maxHealth = 10 + (0.01f *pm.killCount);
         health = maxHealth;
 
         spawnManager = GameObject.FindGameObjectWithTag("Player").GetComponent<EnemySpawn>();
@@ -33,7 +33,7 @@ public class EnemyManager : MonoBehaviour
             int randomNum = Mathf.RoundToInt(Random.Range(0f, spawnManager.guns.Count - 1));
             GameObject AddGun = Instantiate(spawnManager.guns[randomNum]);
             Gun gunScript = AddGun.GetComponent<Gun>();
-            gunScript.damageMult = 0.05f * pm.killCount * Random.Range(1.0f, 2.0f);
+            gunScript.damageMult = 1 + (0.01f * pm.killCount);
             //print("Gun Spawn Damage Mult: " + gunScript.damageMult);
             guns.Add(AddGun);
             AddGun.transform.parent = GunContainer.transform;
@@ -46,17 +46,12 @@ public class EnemyManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        if(pm != null)
-        {
-            pm.killCount++;
-        }
-        
         float trial = Random.Range(0f, 99f);
         if (trial < 20)
         {
             GameObject NewGun = Instantiate(spawnManager.guns[Random.Range(0, spawnManager.guns.Count)], transform.position, Quaternion.identity);
             NewGun.GetComponent<Gun>().Dropped();
-            NewGun.GetComponent<Gun>().damageMult = 0.05f * pm.killCount * Random.Range(1.0f, 2.0f);
+            NewGun.GetComponent<Gun>().damageMult = 0.01f * (pm.killCount * Random.Range(1.0f, 2.0f));
             //print("Gun Spawn Damage Mult: " + NewGun.GetComponent<Gun>().damageMult);
         }
     }
@@ -98,6 +93,7 @@ public class EnemyManager : MonoBehaviour
         health -= amount;
         if(health <= 0)
         {
+            pm.onKill(maxHealth);
             Destroy(gameObject);
         }
     }
