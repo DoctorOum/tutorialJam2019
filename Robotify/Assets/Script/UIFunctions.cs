@@ -12,4 +12,8 @@ public class UIFunctions : MonoBehaviour
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(1);
     }
+    public void ReturnToMain()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+    }
 }
