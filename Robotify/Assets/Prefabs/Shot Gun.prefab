@@ -92,9 +92,9 @@ MonoBehaviour:
   pam: {fileID: 0}
   audioSource: {fileID: -7125084251859941567}
   sounds:
-  - {fileID: 8300000, guid: 6f1a958a7b27b154b8840ade30d48186, type: 3}
-  - {fileID: 8300000, guid: 62fa1552ab44f7e4aa0e0a5595b214e0, type: 3}
-  - {fileID: 8300000, guid: 87a25c4900d3b6e43a2b50ab0376f615, type: 3}
+  - {fileID: 8300000, guid: 3a9e6018b8a283d47961b614c9b5511e, type: 3}
+  - {fileID: 8300000, guid: 9a18da72797103d469de7a14dd3e5764, type: 3}
+  - {fileID: 8300000, guid: ef9226fe703faa54da484a10e304400a, type: 3}
 --- !u!82 &-7125084251859941567
 AudioSource:
   m_ObjectHideFlags: 0

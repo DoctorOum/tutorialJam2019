@@ -662,3 +662,7 @@ MonoBehaviour:
   AlternateBarrels: 1
   isEnemy: 0
   isPickup: 0
+  pam: {fileID: 0}
+  audioSource: {fileID: 0}
+  sounds:
+  - {fileID: 8300000, guid: 0ec5b8497128808429e615ca5a048b99, type: 3}
