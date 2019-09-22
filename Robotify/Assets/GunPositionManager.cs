@@ -156,7 +156,7 @@ public class GunPositionManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        print("Collided with: " + collision.gameObject.name);
+        
         if (collision.tag == "Gun")
         {
             PickUpGun(collision.gameObject);

@@ -63,19 +63,19 @@ public class Gun : MonoBehaviour
     }
     IEnumerator DecayTimer()
     {
-        print("isPickup: " + isPickup);
+        //print("isPickup: " + isPickup);
         for(int i = decayTime; i >= 0; i--)
         {
             if (!isPickup)
             {
-                print("picked Up");
+                //print("picked Up");
                 break;
             }
             yield return new WaitForSeconds(1f);
         }
         if (isPickup)
         {
-            print("Killed it");
+            //print("Killed it");
             Destroy(gameObject);
         }
         
