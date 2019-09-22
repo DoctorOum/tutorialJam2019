@@ -26,6 +26,10 @@ public class Gun : MonoBehaviour
     [Header("Other")]
     public playerAttackManager pam;
 
+    [Header("Sound Manager")]
+    public AudioSource audioSource;
+    public AudioClip[] sounds;
+
     private void Start()
     {
         if (!isPickup)
@@ -88,8 +92,12 @@ public class Gun : MonoBehaviour
     {
         foreach (GameObject spawnPoint in projectileSpawns)
         {
+            if (sounds.Length > 0)
+                audioSource.PlayOneShot(sounds[Random.Range(0,sounds.Length)], 0.5f);
+
             GameObject shot = Instantiate(projectile, spawnPoint.transform.position, transform.rotation);
-            pam.ammo--;
+            if(pam != null)
+                pam.ammo--;
             Projectile currentP = shot.GetComponent<Projectile>();
             if (isEnemy)
             {

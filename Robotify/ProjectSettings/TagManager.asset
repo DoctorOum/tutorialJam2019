@@ -10,6 +10,8 @@ TagManager:
   - Gun
   - EnemyProjectile
   - PlayerProjectile
+  - ProgressionManager
+  - front
   layers:
   - Default
   - TransparentFX

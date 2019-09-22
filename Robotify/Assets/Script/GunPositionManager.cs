@@ -11,10 +11,29 @@ public class GunPositionManager : MonoBehaviour
     private bool canRotateGuns = true;
     private bool canPickupGuns = true;
 
+    [Header("Sprite Renderer")]
+    public SpriteRenderer sr;
+    public GameObject[] sprites;
+
+    [Header("Sound Stuff")]
+    public AudioSource audio;
+    public AudioClip pickupGunSound;
+    public AudioClip dropGunSound;
+    public AudioClip gainSideSound;
+    public AudioClip loseSideSound;
+    public AudioClip gunLossSound;
+    public AudioClip rotate;
+
+
     private void Start()
     {
         pam = GetComponentInParent<playerAttackManager>();
         SetGunPositions();
+        for(int i = 1; i < sprites.Length - 1; i++)
+        {
+            print("depression");
+            sprites[i].GetComponent<SpriteRenderer>().enabled = false;
+        }
     }
 
     public void AlterSideCount(int amount)
@@ -22,16 +41,19 @@ public class GunPositionManager : MonoBehaviour
         pam.sideCount += amount;
         if(amount > 0)
         {
+            audio.PlayOneShot(gainSideSound);
             for (int i = amount; i > 0; i--)
                 pam.guns.Add(null);
         }
         else
         {
+            audio.PlayOneShot(loseSideSound);
             for (int i = amount; i < 0; i++)
                 if(pam.guns[pam.guns.Count - 1] != null)
                     DropGun(true);
                 pam.guns.RemoveAt(pam.guns.Count - 1);
         }
+
         SetGunPositions();
     }
 
@@ -58,14 +80,16 @@ public class GunPositionManager : MonoBehaviour
 
     public void PickUpGun(GameObject gunToPickup)
     {
+
         if (canPickupGuns && gunToPickup.GetComponentInParent<Gun>().isPickup)
         {
             //print("Front Gun Index " + frontGunIndex + " is " + pam.guns[frontGunIndex]);
             if (pam.guns[frontGunIndex] == null)
             {
+                audio.PlayOneShot(pickupGunSound);
                 pam.guns[frontGunIndex] = gunToPickup.transform.parent.gameObject;
                 gunToPickup.GetComponent<SpriteRenderer>().color = Color.yellow;
-                print("Front Gun Index " + frontGunIndex + " is now " + pam.guns[frontGunIndex]);
+                //print("Front Gun Index " + frontGunIndex + " is now " + pam.guns[frontGunIndex]);
 
                 gunToPickup.transform.parent.SetParent(gunContainer.transform);
                 gunToPickup.transform.parent.transform.position = front.transform.position;
@@ -87,6 +111,7 @@ public class GunPositionManager : MonoBehaviour
         {
             if (pam.guns[frontGunIndex] != null)
             {
+                audio.PlayOneShot(dropGunSound);
                 GameObject gunToDrop = pam.guns[frontGunIndex];
                 pam.guns[frontGunIndex] = null;
                 gunToDrop.transform.SetParent(null);
@@ -97,6 +122,7 @@ public class GunPositionManager : MonoBehaviour
         }
         else
         {
+            audio.PlayOneShot(gunLossSound);
             GameObject gunToDrop = pam.guns[pam.guns.Count - 1];
             pam.guns[pam.guns.Count - 1] = null;
             gunToDrop.transform.SetParent(null);
@@ -109,6 +135,7 @@ public class GunPositionManager : MonoBehaviour
 
     public void RotateGuns(float direction)
     {
+        audio.PlayOneShot(rotate);
         if (pam.guns[frontGunIndex] != null)
             pam.guns[frontGunIndex].GetComponentInChildren<SpriteRenderer>().color = Color.white;
 
@@ -140,7 +167,7 @@ public class GunPositionManager : MonoBehaviour
     {
         frontGunIndex = 0;
         float angle = 360f / pam.sideCount;
-        for(int i = 0; i < pam.guns.Capacity; i++)
+        for(int i = 0; i < pam.guns.Capacity -1; i++)
         {
             if(pam.guns[i] != null)
             {

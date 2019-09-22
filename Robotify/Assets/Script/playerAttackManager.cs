@@ -8,12 +8,28 @@ public class playerAttackManager : MonoBehaviour
     public int sideCount = 4;
     public GunPositionManager gpm;
     public List<GameObject> guns;
+    private AudioSource outOfAmmo;
+    private bool soundDelay;
+    private ProgressionManager pm;
 
+    private void Start()
+    {
+        pm = GameObject.FindGameObjectWithTag("ProgressionManager").GetComponent<ProgressionManager>();
+        outOfAmmo = GetComponent<AudioSource>();
+    }
     private void Update()
     {
         if (Input.GetButton("Fire1"))
         {
-            FireGuns();
+            if(ammo > 0)
+            {
+                FireGuns();
+            }
+            else if(!soundDelay)
+            {
+                StartCoroutine("OutOfAmmoDelay");
+            }
+            
         }
         if (Input.GetButtonDown("Fire2"))
         {
@@ -32,6 +48,20 @@ public class playerAttackManager : MonoBehaviour
                 gunScript.Fire();
                 //print("Called Fire Function");
             }
+        }
+    }
+    IEnumerator OutOfAmmoDelay()
+    {
+        soundDelay = true;
+        outOfAmmo.Play();
+        yield return new WaitForSeconds(0.2f);
+        soundDelay = false;
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "EnemyProjectile")
+        {
+            pm.Hit(collision.gameObject.GetComponent<Projectile>().damage);
         }
     }
 }
