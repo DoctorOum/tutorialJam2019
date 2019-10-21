@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 4
-  fireRate: 0.4
+  fireRate: 0.5
   projectileSpeed: 10
   damageMult: 1
   fireRateMult: 1

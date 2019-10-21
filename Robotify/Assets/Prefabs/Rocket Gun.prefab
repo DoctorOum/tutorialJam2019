@@ -45,8 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460f07fee61264643936e89b192b3fac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
-  fireRate: 4
+  power: 0
+  damage: 40
+  fireRate: 2
   projectileSpeed: 10
   damageMult: 1
   fireRateMult: 1

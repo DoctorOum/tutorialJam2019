@@ -233,6 +233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0afe18e26cb86b040a2fe9e185e74535, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sightDistance: 30
   speed: 2
   PlayerLayer:
     serializedVersion: 2
@@ -257,8 +258,11 @@ MonoBehaviour:
   GunOrganizer: {fileID: 1591874981}
   GunContainer: {fileID: 1865549300}
   guns: []
+  pm: {fileID: 0}
   spawnManager: {fileID: 0}
   ai: {fileID: 2965519095774995872}
+  healthIncreasePerKill: 1
+  damageIncreasePerKill: 0.05
 --- !u!61 &-3125613853735081133
 BoxCollider2D:
   m_ObjectHideFlags: 0

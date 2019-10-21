@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GunPositionManager : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class GunPositionManager : MonoBehaviour
     [Header("Sprite Renderer")]
     public SpriteRenderer sr;
     public GameObject[] sprites;
+
+    [Header("UI Stuff")]
+    public Text gunPowerText;
 
     [Header("Sound Stuff")]
     public AudioSource audio;
@@ -33,6 +37,15 @@ public class GunPositionManager : MonoBehaviour
         {
             sprites[i].SetActive(false);
         }
+        //print("Gun list capacity: " + pam.guns.Capacity);
+    }
+
+    public void UpdateUIElements()
+    {
+        if (pam.guns[frontGunIndex] == null)
+            gunPowerText.text = "";
+        else
+            gunPowerText.text = pam.guns[frontGunIndex].GetComponent<Gun>().power.ToString();
     }
 
     public void AlterSideCount(int amount)
@@ -41,7 +54,7 @@ public class GunPositionManager : MonoBehaviour
         {
             pam.sideCount += amount;
             int current = pam.sideCount - 3;
-            print("NewSides: " + pam.guns.Capacity);
+            //print("NewSides: " + pam.guns.Capacity);
             if (amount > 0)
             {
                 audio.PlayOneShot(gainSideSound);   
@@ -67,15 +80,17 @@ public class GunPositionManager : MonoBehaviour
 
                 for (int i = amount; i < 0; i++)
                 {
-                    if (pam.guns[pam.guns.Count - 1] != null)
+                    //if (pam.guns[pam.guns.Count - 1] != null)
                         DropGun(true);
-                    pam.guns.RemoveAt(pam.guns.Count - 1);
                 }
 
             }
-            print("Made it to end");
+            //print("Capacity of list: " + pam.guns.Capacity);
+            //print("Made it to end");
             SetGunPositions();
-            //RotateGuns(1f, true);
+            //RotateGuns(1f);
+            //RotateGuns(-1f);
+            UpdateUIElements();
         }
         
     }
@@ -120,6 +135,7 @@ public class GunPositionManager : MonoBehaviour
 
                 gunToPickup.GetComponentInParent<Gun>().pam = pam;
                 gunToPickup.GetComponentInParent<Gun>().PickedUp();
+                UpdateUIElements();
             }
             else
             {
@@ -145,21 +161,57 @@ public class GunPositionManager : MonoBehaviour
         }
         else
         {
+            GameObject gunToDrop;
+            int slotToRemove = 0;
             audio.PlayOneShot(gunLossSound);
-            GameObject gunToDrop = pam.guns[pam.guns.Count - 1];
-            pam.guns[pam.guns.Count - 1] = null;
-            gunToDrop.transform.SetParent(null);
-            gunToDrop.GetComponentInChildren<SpriteRenderer>().color = Color.white;
-            gunToDrop.GetComponent<Gun>().Dropped();
-            StartCoroutine("PickupDelay");
+            pam.AlterAmmo(-(pam.ammo / pam.sideCount));
+            //print("Front Gun Index = " + frontGunIndex);
+            //prevents the player from losing their currently equipped gun
+            if (frontGunIndex == pam.guns.Count - 1)
+            {
+                if(pam.guns[0] != null)
+                {
+                    gunToDrop = pam.guns[0];
+                    pam.guns[0] = null;
+                    //print("pam.guns.count = " + pam.guns.Count);
+                }
+                else
+                {
+                    gunToDrop = null;
+                }
+                slotToRemove = 0;
+            }
+            else
+            {
+                gunToDrop = pam.guns[pam.guns.Count - 1];
+                pam.guns[pam.guns.Count - 1] = null;
+                print("pam.guns.count = " + pam.guns.Count);
+                slotToRemove = pam.guns.Count - 1;
+                
+            }
+            
+            if(gunToDrop != null)
+            {
+                gunToDrop.transform.SetParent(null);
+                gunToDrop.GetComponentInChildren<SpriteRenderer>().color = Color.white;
+                gunToDrop.GetComponent<Gun>().Dropped();
+                StartCoroutine("PickupDelay");
+            }
+            
+
+            pam.guns.RemoveAt(slotToRemove);
+            if(frontGunIndex > pam.guns.Count - 1)
+            {
+                frontGunIndex = pam.guns.Count - 1;
+            }
+            
         }
-        
+        UpdateUIElements();
     }
 
     public void RotateGuns(float direction, bool sideChange = false)
     {
-        print("RG was called");
-        if (sideChange)
+        /*if (sideChange)
         {
             //gunContainer.transform.rotation = new Quaternion(0, 0, 0, 0);
             print("rotation " + gunContainer.transform.rotation);
@@ -190,8 +242,9 @@ public class GunPositionManager : MonoBehaviour
                     pam.guns[frontGunIndex].GetComponentInChildren<SpriteRenderer>().color = Color.yellow;
                 }
             }
-        }
-        else
+        }*/
+        //Rotate Guns but alter array position rather than tracking a front gun
+        if(true)
         {
             audio.PlayOneShot(rotate);
 
@@ -220,6 +273,7 @@ public class GunPositionManager : MonoBehaviour
                 pam.guns[frontGunIndex].GetComponentInChildren<SpriteRenderer>().color = Color.yellow;
             }
             StartCoroutine("ScrollDelay");
+            UpdateUIElements();
         }
         
 
@@ -228,21 +282,38 @@ public class GunPositionManager : MonoBehaviour
 
     public void SetGunPositions()
     {
-        frontGunIndex = 0;
-        print("Gun Capacity " + pam.guns.Count);
+        //frontGunIndex = 0;
+        //print("Gun Capacity " + pam.guns.Count);
+        print("Front gun should be: " + pam.guns[frontGunIndex]);
         float angle = 360f / pam.sideCount;
         for (int i = 0; i < pam.guns.Count; i++)
         {
-            print(i);
-            if (pam.guns[i] != null)
+            //fornt gun index starts it so that the first gun will always be the one selected 
+            //rather than resetting to the first in the list
+            //print("Frotn Gun Index = " + frontGunIndex);
+            if(i+frontGunIndex < pam.guns.Count)
             {
-                pam.guns[i].transform.position = front.transform.position;
-                pam.guns[i].transform.rotation = front.transform.rotation;
+                if (i + frontGunIndex < 0)
+                    print("FrontGunIndex is zero!!!!!!");
+
+                if (pam.guns[i + frontGunIndex] != null)
+                {
+                    pam.guns[i + frontGunIndex].transform.position = front.transform.position;
+                    pam.guns[i + frontGunIndex].transform.rotation = front.transform.rotation;
+                }
+            }
+            else
+            {
+                if (pam.guns[(i + frontGunIndex) - pam.guns.Count] != null)
+                {
+                    pam.guns[(i + frontGunIndex) - pam.guns.Count].transform.position = front.transform.position;
+                    pam.guns[(i + frontGunIndex) - pam.guns.Count].transform.rotation = front.transform.rotation;
+                }
             }
             transform.Rotate(new Vector3(0, 0, -angle));
         }
-
-        print("Updated Guns");
+        UpdateUIElements();
+        //print("Updated Guns");
     }
 
     IEnumerator ScrollDelay()
@@ -254,14 +325,5 @@ public class GunPositionManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         canPickupGuns = true;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        
-        if (collision.tag == "Gun")
-        {
-            PickUpGun(collision.gameObject);
-        }
     }
 }

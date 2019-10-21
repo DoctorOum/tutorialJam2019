@@ -5,7 +5,9 @@ using UnityEngine;
 public class Gun : MonoBehaviour
 {
     [Header("Base Stats")]
-    [SerializeField]private float damage = 5;
+    [Tooltip("power is the damager per second a gun can deal")]
+    public float power;
+    [SerializeField]public float damage = 5;
     [SerializeField]private float fireRate = 1;
     [SerializeField]private float projectileSpeed = 10;
     public float damageMult = 1;
@@ -36,6 +38,16 @@ public class Gun : MonoBehaviour
         {
             GetComponentInChildren<BoxCollider2D>().enabled = false;
         }
+        if (AlternateBarrels)
+        {
+            power = (damage * damageMult) * (1 / ((fireRate / fireRateMult) / projectileSpawns.Length));
+        }
+        else
+        {
+            power = (damage * damageMult) * (1 / (fireRate / fireRateMult));
+        }
+
+        //print("Power Lvl of " + gameObject.name + ": " + power);
     }
 
     public void PickedUp()
@@ -97,7 +109,7 @@ public class Gun : MonoBehaviour
 
             GameObject shot = Instantiate(projectile, spawnPoint.transform.position, transform.rotation);
             if(pam != null)
-                pam.ammo--;
+                pam.AlterAmmo(-1);
             Projectile currentP = shot.GetComponent<Projectile>();
             if (isEnemy)
             {
@@ -125,7 +137,6 @@ public class Gun : MonoBehaviour
                 yield return new WaitForSeconds((fireRate / fireRateMult)/projectileSpawns.Length);
         }
         
-        //print("Fired Gun");
         if (!AlternateBarrels)
             yield return new WaitForSeconds((fireRate / fireRateMult));
         firing = false;

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class playerAttackManager : MonoBehaviour
 {
@@ -11,11 +12,14 @@ public class playerAttackManager : MonoBehaviour
     private AudioSource outOfAmmo;
     private bool soundDelay;
     private ProgressionManager pm;
+    [Header("UI Stuff")]
+    public Text ammoText;
 
     private void Start()
     {
         pm = GameObject.FindGameObjectWithTag("ProgressionManager").GetComponent<ProgressionManager>();
         outOfAmmo = GetComponent<AudioSource>();
+        ammoText.text = ammo.ToString();
     }
     private void Update()
     {
@@ -36,6 +40,14 @@ public class playerAttackManager : MonoBehaviour
             gpm.SetGunPositions();
         }
 
+    }
+
+    public void AlterAmmo(int amount)
+    {
+        ammo += amount;
+        if (ammo < 0)
+            ammo = 0;
+        ammoText.text = ammo.ToString();
     }
 
     private void FireGuns()
@@ -62,6 +74,10 @@ public class playerAttackManager : MonoBehaviour
         if (collision.gameObject.tag == "EnemyProjectile")
         {
             pm.Hit(collision.gameObject.GetComponent<Projectile>().damage);
+        }
+        if (collision.gameObject.tag == "Gun")
+        {
+            gpm.PickUpGun(collision.gameObject);
         }
     }
 }

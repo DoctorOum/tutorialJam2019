@@ -5,7 +5,7 @@ using UnityEngine;
 public class AIStrafe : MonoBehaviour
 {
     GameObject Player;
-    float sightDistance = 15f;
+    public float sightDistance = 15f;
     float strafeDistance;
     public float speed = 2;
     public LayerMask PlayerLayer;

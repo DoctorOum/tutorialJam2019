@@ -20,11 +20,15 @@ public class EnemyManager : MonoBehaviour
     public EnemySpawn spawnManager;
     public AIStrafe ai;
 
+    [Header("Scaling vars")]
+    [SerializeField] private float healthIncreasePerKill = 1f;
+    [SerializeField] private float damageIncreasePerKill = 0.01f;
+
     private void Start()
     {
         pm = GameObject.FindGameObjectWithTag("ProgressionManager").GetComponent<ProgressionManager>();
 
-        maxHealth = 10 + (0.01f *pm.killCount);
+        maxHealth = 10 + (healthIncreasePerKill * pm.killCount);
         health = maxHealth;
 
         spawnManager = GameObject.FindGameObjectWithTag("Player").GetComponent<EnemySpawn>();
@@ -33,7 +37,7 @@ public class EnemyManager : MonoBehaviour
             int randomNum = Mathf.RoundToInt(Random.Range(0f, spawnManager.guns.Count - 1));
             GameObject AddGun = Instantiate(spawnManager.guns[randomNum]);
             Gun gunScript = AddGun.GetComponent<Gun>();
-            gunScript.damageMult = 1 + (0.01f * pm.killCount);
+            gunScript.damageMult = 1 + (damageIncreasePerKill * pm.killCount);
             //print("Gun Spawn Damage Mult: " + gunScript.damageMult);
             guns.Add(AddGun);
             AddGun.transform.parent = GunContainer.transform;
@@ -42,18 +46,6 @@ public class EnemyManager : MonoBehaviour
        }
         //print("Gun Capacity : " + guns.Count);
         SetGunPositions();
-    }
-
-    private void OnDestroy()
-    {
-        float trial = Random.Range(0f, 99f);
-        if (trial < 20)
-        {
-            GameObject NewGun = Instantiate(spawnManager.guns[Random.Range(0, spawnManager.guns.Count)], transform.position, Quaternion.identity);
-            NewGun.GetComponent<Gun>().Dropped();
-            NewGun.GetComponent<Gun>().damageMult = 0.01f * (pm.killCount * Random.Range(1.0f, 2.0f));
-            //print("Gun Spawn Damage Mult: " + NewGun.GetComponent<Gun>().damageMult);
-        }
     }
 
     private void Update()
@@ -94,6 +86,13 @@ public class EnemyManager : MonoBehaviour
         if(health <= 0)
         {
             pm.onKill(maxHealth);
+            float trial = Random.Range(0f, 99f);
+            if (trial < 20)
+            {
+                GameObject NewGun = Instantiate(spawnManager.guns[Random.Range(0, spawnManager.guns.Count - 1)], transform.position, Quaternion.identity);
+                NewGun.GetComponent<Gun>().Dropped();
+                NewGun.GetComponent<Gun>().damageMult = 1 + damageIncreasePerKill * pm.killCount; //*(pm.killCount * Random.Range(1.0f, 2.0f));
+            }
             Destroy(gameObject);
         }
     }
